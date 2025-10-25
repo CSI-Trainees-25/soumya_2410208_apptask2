@@ -77,7 +77,7 @@ class OnBoadingScreen extends StatelessWidget {
                   'Dive In ⟶',
                   style: TextStyle(
                     color: const Color.fromARGB(246, 255, 255, 255),
-                    fontSize: 20,
+                    fontSize: 12,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.1,
                   ),
