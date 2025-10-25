@@ -66,6 +66,23 @@ class OnBoadingScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(height: 70),
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 179, 137, 122),
+                ),
+
+                child: Text(
+                  'Dive In ⟶',
+                  style: TextStyle(
+                    color: const Color.fromARGB(246, 255, 255, 255),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.1,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
