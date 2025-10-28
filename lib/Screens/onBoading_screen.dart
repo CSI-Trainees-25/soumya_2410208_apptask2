@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home_screen.dart';
 
 class OnBoadingScreen extends StatelessWidget {
   const OnBoadingScreen({super.key});
@@ -68,7 +69,12 @@ class OnBoadingScreen extends StatelessWidget {
               ),
               SizedBox(height: 70),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 179, 137, 122),
                 ),
