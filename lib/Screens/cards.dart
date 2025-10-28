@@ -25,7 +25,7 @@ class _coffeecardsState extends State<coffeecards> {
     return SingleChildScrollView(
       child: Container(
         width: 200,
-        height: 200,
+        height: 324,
         decoration: BoxDecoration(
           color: Colors.white10,
           borderRadius: BorderRadius.circular(25),
@@ -44,7 +44,7 @@ class _coffeecardsState extends State<coffeecards> {
                 ),
                 Positioned(
                   top: 10,
-                  left: 10,
+                  right: 10,
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
@@ -53,8 +53,8 @@ class _coffeecardsState extends State<coffeecards> {
                     decoration: BoxDecoration(
                       color: Colors.black.withOpacity(0.4),
                       borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                        bottomLeft: Radius.circular(20),
                       ),
                     ),
                     child: Row(
