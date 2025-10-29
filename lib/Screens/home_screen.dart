@@ -1,6 +1,6 @@
 import 'cards.dart';
 import 'clipper.dart';
-
+import 'coffee.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,6 +11,43 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+  int _selectedIndex = 0;
+  final List<Coffee> _coffeeMenu = [
+    Coffee(
+      imagepath: 'Assets/Images/image copy 2.png',
+      title: 'Espresso',
+      subtitle: 'with Oat Milk',
+      price: '420 only',
+      rating: '4.5',
+    ),
+    Coffee(
+      imagepath: 'Assets/Images/image copy.png',
+      title: 'Cappuccino',
+      subtitle: 'with Milk',
+      price: '450 only',
+      rating: '4.8',
+    ),
+    Coffee(
+      imagepath: 'Assets/Images/image.png',
+      title: 'Latte',
+      subtitle: 'with Almond Milk',
+      price: '480 only',
+      rating: '4.7',
+    ),
+    Coffee(
+      imagepath: 'Assets/Images/image.png',
+      title: 'Latte',
+      subtitle: 'with Almond Milk',
+      price: '480 only',
+      rating: '4.7',
+    ),
+  ];
+  void onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   late final TabController _tabController;
   @override
   void initState() {
@@ -26,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    //final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: const Color(0xFFF9F9F9),
       appBar: AppBar(
@@ -72,14 +109,44 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 ),
               ),
             ),
-            SizedBox(height: screenHeight * 0.03),
+            SizedBox(height: 20),
             _buildSearchBar(),
-            SizedBox(height: screenHeight * 0.02),
+            SizedBox(height: 20),
             _buildCategoryBar(),
-            SizedBox(height: screenHeight * 0.02),
-            _buildCoffeeList(screenHeight),
+            SizedBox(height: 20),
+            _buildCoffeeList(),
+            SizedBox(height: 20),
+            _buildSpecialCard(),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: onItemTapped,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        selectedItemColor: Color(0xFF9B9B9B),
+        items: [
+          BottomNavigationBarItem(
+            icon: IconButton(onPressed: () {}, icon: Icon(Icons.home_outlined)),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: IconButton(onPressed: () {}, icon: Icon(Icons.favorite)),
+            label: 'Favorite',
+          ),
+          BottomNavigationBarItem(
+            icon: IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.shopping_bag_outlined),
+            ),
+            label: 'Cart',
+          ),
+          BottomNavigationBarItem(
+            icon: IconButton(onPressed: () {}, icon: Icon(Icons.person)),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }
@@ -116,38 +183,47 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildCoffeeList(double screenHeight) {
-    return SizedBox(
-      height: screenHeight * 0.38,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        clipBehavior: Clip.none,
-        children: [
-          coffeecards(
-            imagepath: 'Assets/Images/image copy 2.png',
-            title: 'Espresso',
-            Subtitle: 'with Oat Milk',
-            price: '4.20',
-            Rating: '4.5',
-          ),
-          SizedBox(width: 20),
-          coffeecards(
-            imagepath: 'Assets/Images/image copy.png',
-            title: 'Cappuccino',
-            Subtitle: 'with Milk',
-            price: '4.50',
-            Rating: '4.8',
-          ),
-          SizedBox(width: 20),
-          coffeecards(
-            imagepath: 'Assets/Images/image.png',
-            title: 'Latte',
-            Subtitle: 'with Almond Milk',
-            price: '4.80',
-            Rating: '4.7',
-          ),
-        ],
-      ),
+  Widget _buildCoffeeList() {
+    return GridView.count(
+      crossAxisCount: 2,
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 10,
+      childAspectRatio: 0.71,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+
+      children: [
+        coffeecards(
+          imagepath: 'Assets/Images/image copy 2.png',
+          title: 'Espresso',
+          Subtitle: 'with Oat Milk',
+          price: '420 only',
+          Rating: '4.5',
+        ),
+
+        coffeecards(
+          imagepath: 'Assets/Images/image copy.png',
+          title: 'Cappuccino',
+          Subtitle: 'with Milk',
+          price: '450 only',
+          Rating: '4.8',
+        ),
+
+        coffeecards(
+          imagepath: 'Assets/Images/image.png',
+          title: 'Latte',
+          Subtitle: 'with Almond Milk',
+          price: '480 only ',
+          Rating: '4.7',
+        ),
+        coffeecards(
+          imagepath: 'Assets/Images/image.png',
+          title: 'Latte',
+          Subtitle: 'with Almond Milk',
+          price: '480 only ',
+          Rating: '4.7',
+        ),
+      ],
     );
   }
 
@@ -173,6 +249,58 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
       dividerColor: Colors.transparent,
       tabAlignment: TabAlignment.start,
+    );
+  }
+
+  Widget _buildSpecialCard() {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(.5),
+            blurRadius: 10,
+            spreadRadius: 2,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: Image.asset(
+              'Assets/Images/image copy 2.png',
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(width: 15),
+          const Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Brewed Morning',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF2F2D2C),
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  'A special blend of dark roast coffee, perfect for you.',
+                  style: TextStyle(fontSize: 14, color: Color(0xFF9B9B9B)),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
