@@ -2,6 +2,7 @@ import 'cards.dart';
 import 'clipper.dart';
 import 'coffee.dart';
 import 'package:flutter/material.dart';
+import 'cart.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -42,6 +43,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       rating: '4.7',
     ),
   ];
+  final List<Coffee> _cart = [];
+  void addToCart(Coffee coffee) {
+    setState(() {
+      _cart.insert(0, coffee);
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${coffee.title} added to cart!'),
+        duration: const Duration(seconds: 1),
+      ),
+    );
+  }
+
   void onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -137,11 +151,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
           BottomNavigationBarItem(
             icon: IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.shopping_bag_outlined),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CartScreen(cartItems: _cart),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.shopping_bag_outlined),
             ),
             label: 'Cart',
           ),
+
           BottomNavigationBarItem(
             icon: IconButton(onPressed: () {}, icon: Icon(Icons.person)),
             label: 'Profile',
@@ -184,46 +206,26 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildCoffeeList() {
-    return GridView.count(
-      crossAxisCount: 2,
-      crossAxisSpacing: 10,
-      mainAxisSpacing: 10,
-      childAspectRatio: 0.71,
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        childAspectRatio: 0.71,
+      ),
+
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
 
-      children: [
-        coffeecards(
-          imagepath: 'Assets/Images/image copy 2.png',
-          title: 'Espresso',
-          Subtitle: 'with Oat Milk',
-          price: '420 only',
-          Rating: '4.5',
-        ),
+      itemCount: _coffeeMenu.length,
+      itemBuilder: (context, index) {
+        final coffee = _coffeeMenu[index];
 
-        coffeecards(
-          imagepath: 'Assets/Images/image copy.png',
-          title: 'Cappuccino',
-          Subtitle: 'with Milk',
-          price: '450 only',
-          Rating: '4.8',
-        ),
-
-        coffeecards(
-          imagepath: 'Assets/Images/image.png',
-          title: 'Latte',
-          Subtitle: 'with Almond Milk',
-          price: '480 only ',
-          Rating: '4.7',
-        ),
-        coffeecards(
-          imagepath: 'Assets/Images/image.png',
-          title: 'Latte',
-          Subtitle: 'with Almond Milk',
-          price: '480 only ',
-          Rating: '4.7',
-        ),
-      ],
+        return coffeecards(
+          coffee: coffee,
+          onAddToCart: () => addToCart(coffee),
+        );
+      },
     );
   }
 

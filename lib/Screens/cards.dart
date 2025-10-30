@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
+import 'coffee.dart';
+import 'home_screen.dart';
 
-class coffeecards extends StatefulWidget {
-  String imagepath;
-  String title;
-  String Subtitle;
-  String price;
-  String Rating;
-  coffeecards({
+class coffeecards extends StatelessWidget {
+  final Coffee coffee;
+
+  final VoidCallback onAddToCart;
+
+  const coffeecards({
     super.key,
-    required this.imagepath,
-    required this.title,
-    required this.Subtitle,
-    required this.Rating,
-    required this.price,
+    required this.coffee,
+    required this.onAddToCart,
   });
 
-  @override
-  State<coffeecards> createState() => _coffeecardsState();
-}
-
-class _coffeecardsState extends State<coffeecards> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,7 +31,7 @@ class _coffeecardsState extends State<coffeecards> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
                   child: Image.asset(
-                    widget.imagepath,
+                    coffee.imagepath,
                     fit: BoxFit.cover,
                     height: 150,
                     width: double.infinity,
@@ -65,7 +58,7 @@ class _coffeecardsState extends State<coffeecards> {
                       Icon(Icons.star, color: Colors.amber, size: 18),
                       SizedBox(width: 5),
                       Text(
-                        widget.Rating,
+                        coffee.rating,
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
@@ -81,7 +74,7 @@ class _coffeecardsState extends State<coffeecards> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Text(
-              widget.title,
+              coffee.title,
               style: TextStyle(
                 fontSize: 20,
                 letterSpacing: 1.1,
@@ -89,10 +82,9 @@ class _coffeecardsState extends State<coffeecards> {
               ),
             ),
           ),
-          SizedBox(height: 5),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Text(widget.Subtitle, style: TextStyle(fontSize: 14)),
+            child: Text(coffee.subtitle, style: TextStyle(fontSize: 14)),
           ),
           SizedBox(height: 10),
           Padding(
@@ -101,11 +93,11 @@ class _coffeecardsState extends State<coffeecards> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  widget.price,
+                  coffee.price,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 7, horizontal: 10.0),
+                  padding: EdgeInsets.symmetric(vertical: 1, horizontal: 5.0),
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 144, 102, 76),
                     borderRadius: BorderRadius.only(
@@ -113,7 +105,10 @@ class _coffeecardsState extends State<coffeecards> {
                       bottomRight: Radius.circular(15),
                     ),
                   ),
-                  child: const Icon(Icons.add, color: Colors.white, size: 24),
+                  child: IconButton(
+                    icon: Icon(Icons.add, color: Colors.white),
+                    onPressed: onAddToCart,
+                  ),
                 ),
               ],
             ),
